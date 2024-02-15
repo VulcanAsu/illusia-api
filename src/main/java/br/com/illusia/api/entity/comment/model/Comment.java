@@ -4,6 +4,7 @@ package br.com.illusia.api.entity.comment.model;
 
 // ✦•······················• IMPORTS - START •······················•✦ //
 import br.com.illusia.api.infrastructure.model.PersistenceEntity;
+import br.com.illusia.api.entity.like.model.Like;
 import br.com.illusia.api.entity.user.model.User;
 
 import java.time.LocalDateTime;
@@ -17,6 +18,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -41,8 +43,8 @@ public class Comment extends PersistenceEntity {
     @Column(name = "content", nullable = false)
     private String content;
 
-    @Column(name = "date", nullable = false)
-    private LocalDateTime date;
+    @Column(name = "created_at", nullable = false)
+    private LocalDateTime createdAt; 
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
@@ -53,6 +55,9 @@ public class Comment extends PersistenceEntity {
             joinColumns = @JoinColumn(name = "comment_id"),
             inverseJoinColumns = @JoinColumn(name = "reply_id"))
     private List<Comment> replies;
+
+    @OneToMany(mappedBy = "comment")
+    private List<Like> likes;
 
     // ✦•······················• ATTRIBUTES - END •······················•✦ //
 }
