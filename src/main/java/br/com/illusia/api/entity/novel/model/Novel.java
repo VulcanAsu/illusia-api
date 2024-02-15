@@ -21,9 +21,16 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.List;
 // ✦•······················• IMPORTS - END •······················•✦ //
 
+/**
+ * Entidade central do sistema.
+ *
+ * @author Giovane Neves
+ * @since v1
+ */
 @Table(name = "novels")
 @Entity
 @Data
@@ -33,15 +40,19 @@ import java.util.List;
 public class Novel extends PersistenceEntity {
 
     // ✦•······················• ATTRIBUTES - START •······················•✦ //
+    @Column(name = "title", nullable = false)
     private String title;
+    @Column(name = "publish_date", nullable = false)
+    private LocalDateTime publishDate;
     @ElementCollection
     @CollectionTable(name = "alternative_titles", joinColumns = @JoinColumn(name = "entity_id"))
     @Column(name = "alternative_titles")
     private List<String> alternativeTitles;
-    @Column(name = "total_chapters")
+    @Column(name = "total_chapters", nullable = false)
     private long totalChapters;
+    @Column(name = "natinality", nullable = false)
     private String nationality;
-    @Column(name = "sinopsys", columnDefinition = "TEXT")
+    @Column(name = "sinopsys", columnDefinition = "TEXT", nullable = false)
     private String sinopsys;
     @Enumerated(value = EnumType.STRING)
     private StatusNovel status;
